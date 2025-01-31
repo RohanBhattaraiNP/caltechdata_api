@@ -8,14 +8,14 @@ import json
 
 
 def test_datacite_rdm_conversion(full_datacite43_record, full_rdm_record):
-    converted = customize_schema(full_datacite43_record, schema="43", pilot=True)
+    converted = customize_schema(full_datacite43_record, schema="43", production=False)
 
     assert converted == full_rdm_record
 
 
 def test_datacite_rdm_create_edit(full_datacite43_record):
     doi = caltechdata_write(
-        full_datacite43_record, schema="43", pilot=True, publish=True
+        full_datacite43_record, schema="43", production=False, publish=True
     )
 
     assert doi.startswith("10.33569")
@@ -23,7 +23,7 @@ def test_datacite_rdm_create_edit(full_datacite43_record):
     doi = caltechdata_write(
         full_datacite43_record,
         schema="43",
-        pilot=True,
+        production=False,
         files=["codemeta.json"],
         publish=True,
     )
@@ -31,20 +31,20 @@ def test_datacite_rdm_create_edit(full_datacite43_record):
     assert doi.startswith("10.33569")
 
     # If we don't publish, don't get back a DOI
-    idv = caltechdata_write(full_datacite43_record, schema="43", pilot=True)
+    idv = caltechdata_write(full_datacite43_record, schema="43", production=False)
 
     assert idv.startswith("10.33569") == False
 
     full_datacite43_record["publisher"] = "Edited"
 
     doi = caltechdata_edit(
-        idv, full_datacite43_record, schema="43", pilot=True, publish=True
+        idv, full_datacite43_record, schema="43", production=False, publish=True
     )
 
     assert doi.startswith("10.33569")
     idv = doi.split("/")[1]
 
-    new_metadata = get_metadata(idv, production=False, pilot=True)
+    new_metadata = get_metadata(idv, production=False, production=False)
 
     assert new_metadata["publisher"] == "Edited"
 
@@ -55,7 +55,7 @@ def test_datacite_rdm_create_edit(full_datacite43_record):
         full_datacite43_record,
         files=["codemeta.json"],
         schema="43",
-        pilot=True,
+        production=False,
         publish=True,
     )
 
@@ -63,6 +63,6 @@ def test_datacite_rdm_create_edit(full_datacite43_record):
 
     idv = new_doi.split("/")[1]
 
-    new_metadata = get_metadata(idv, production=False, pilot=True)
+    new_metadata = get_metadata(idv, production=False, production=False)
 
     assert new_metadata["publisher"] == "Again!"
