@@ -29,6 +29,10 @@ class CaltechDataTester:
         # Initialize logging
         self.log_file = os.path.join(self.test_run_dir, "test_log.txt")
 
+        # Track the number of answered questions
+        self.answered_questions = 0
+        self.total_questions = 14  # Update this based on the number of expected questions
+
     def log(self, message):
         """Log message to both console and file"""
         print(message)
@@ -113,12 +117,22 @@ class CaltechDataTester:
 
             # Mock input and run CLI
             def mock_input(prompt):
-                self.log(f"Prompt: {prompt}")
                 if prompt in responses:
                     response = responses[prompt]
+                    self.answered_questions += 1
+                    self.log(f"Prompt: {prompt}")
                     self.log(f"Response: {response}")
+
+                    # If last expected question is answered, exit
+                    if self.answered_questions >= self.total_questions:
+                        self.log("All expected questions answered. Exiting test.")
+                        sys.exit(0)
+
                     return response
-                return ""
+
+                # If an unexpected prompt is encountered, log an error and exit
+                self.log(f"Unexpected prompt encountered: {prompt}. Exiting test.")
+                sys.exit(1)
 
             with patch("builtins.input", side_effect=mock_input):
                 # Use -test flag to use test mode
@@ -129,6 +143,10 @@ class CaltechDataTester:
             sys.stdout = sys.__stdout__
 
             return True
+
+        except SystemExit as e:
+            # Catch system exit and determine success
+            return e.code == 0
 
         except Exception as e:
             self.log(f"Error in test submission: {e}")
