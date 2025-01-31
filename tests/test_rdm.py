@@ -5,10 +5,11 @@ from caltechdata_api import (
     get_metadata,
 )
 import json
+import os
 
 
 def test_datacite_rdm_conversion(full_datacite43_record, full_rdm_record):
-    converted = customize_schema(full_datacite43_record, schema="43", production=False)
+    converted = customize_schema(full_datacite43_record, schema="43")
 
     assert converted == full_rdm_record
 
