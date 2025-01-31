@@ -31,7 +31,7 @@ class CaltechDataTester:
 
         # Track the number of answered questions
         self.answered_questions = 0
-        self.total_questions = 14  # Update this based on the number of expected questions
+        self.total_questions = 14  # Adjust based on actual number of expected questions
 
     def log(self, message):
         """Log message to both console and file"""
@@ -84,7 +84,7 @@ class CaltechDataTester:
         }
 
     def run_test_submission(self):
-        """Run the complete test submission process"""
+        """Run the complete test submission process and wait for CLI output"""
         try:
             self.log("Starting test submission process...")
 
@@ -123,11 +123,6 @@ class CaltechDataTester:
                     self.log(f"Prompt: {prompt}")
                     self.log(f"Response: {response}")
 
-                    # If last expected question is answered, exit
-                    if self.answered_questions >= self.total_questions:
-                        self.log("All expected questions answered. Exiting test.")
-                        sys.exit(0)
-
                     return response
 
                 # If an unexpected prompt is encountered, log an error and exit
@@ -135,28 +130,29 @@ class CaltechDataTester:
                 sys.exit(1)
 
             with patch("builtins.input", side_effect=mock_input):
-                # Use -test flag to use test mode
                 sys.argv = [sys.argv[0], "-test"]
                 cli_module.main()
 
             # Restore stdout
             sys.stdout = sys.__stdout__
 
+            # Wait until the CLI process has completed before exiting
+            self.log("\n✅ CLI execution completed. Checking final output...")
+            output_text = output_capture.get_output()
+            self.log(f"\nCLI Output:\n{output_text}")
+
+            # Final exit after processing everything
             return True
 
-        except SystemExit as e:
-            # Catch system exit and determine success
-            return e.code == 0
-
         except Exception as e:
-            self.log(f"Error in test submission: {e}")
+            self.log(f"❌ Error in test submission: {e}")
             traceback.print_exc()
             return False
         finally:
             # Cleanup
             if "test_csv" in locals() and os.path.exists(test_csv):
                 os.remove(test_csv)
-            self.log("Test files cleaned up")
+            self.log("🧹 Test files cleaned up")
 
 
 def main():
