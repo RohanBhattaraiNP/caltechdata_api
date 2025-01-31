@@ -44,7 +44,7 @@ def test_datacite_rdm_create_edit(full_datacite43_record):
     assert doi.startswith("10.33569")
     idv = doi.split("/")[1]
 
-    new_metadata = get_metadata(idv, production=False, production=False)
+    new_metadata = get_metadata(idv, production=False, publish=True)
 
     assert new_metadata["publisher"] == "Edited"
 
@@ -63,6 +63,6 @@ def test_datacite_rdm_create_edit(full_datacite43_record):
 
     idv = new_doi.split("/")[1]
 
-    new_metadata = get_metadata(idv, production=False, production=False)
+    new_metadata = get_metadata(idv, production=False)
 
     assert new_metadata["publisher"] == "Again!"
