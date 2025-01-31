@@ -539,7 +539,7 @@ def validate_metadata(json_record):
                             errors.append(
                                 "Each organizational 'contributor' must have 'name'."
                             )
-                else:
+                #else:
                     #if "familyName" not in contributor:
                     #   errors.append(
                     #       "Each 'contributor' must have a 'familyName' or have type Organizational"
