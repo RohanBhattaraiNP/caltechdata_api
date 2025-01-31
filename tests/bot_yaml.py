@@ -60,23 +60,22 @@ class CaltechDataTester:
     def generate_test_responses(self):
         """Generate test responses for CLI prompts"""
         return {
-            "What would you like to do? (create/edit/profile/exit): ": "create",
-            "Do you want to use metadata from an existing file or create new metadata? (existing/create): ": "create",
-            "Enter the title of the dataset: ": f"Test Dataset {self.timestamp}",
-            "Enter the abstract or description of the dataset: ": "This is an automated test dataset containing sample climate data for validation purposes.",
-            "Enter the number corresponding to the desired license: ": "1",
-            "Use saved profile? (y/n): ": "n",
-            "Enter your ORCID identifier: ": os.environ.get(
+            "Do you want to create or edit a CaltechDATA record? (create/edit): ": "create",
+            "Would you like to load metadata from an existing file or enter new details? (existing/new): ": "new",
+            "Enter the dataset title: ": f"Test Dataset {self.timestamp}",
+            "Provide a brief description of the dataset: ": "Automated test dataset with sample climate data.",
+            "Select the license by entering its corresponding number: ": "1",
+            "Please enter your ORCID ID (e.g., 0000-0002-1825-0097): ": os.environ.get(
                 "TEST_ORCID", "0000-0002-1825-0097"
             ),
-            "How many funding entries do you want to provide? ": "1",
-            "Enter the award number for funding: ": "NSF-1234567",
-            "Enter the award title for funding: ": "Automated Testing Grant",
-            "Enter the funder ROR (https://ror.org): ": "021nxhr62",
-            "Do you want to upload or link data files? (upload/link/n): ": "upload",
-            "Enter the filename to upload as a supporting file (or 'n' to finish): ": "test_data.csv",
-            "Do you want to add more files? (y/n): ": "n",
-            "Do you want to send this record to CaltechDATA? (y/n): ": "y",
+            "How many funding sources would you like to add? ": "1",
+            "Please enter the funding award number: ": "NSF-1234567",
+            "What is the title of the funding award? ": "Automated Testing Grant",
+            "Provide the ROR ID of the funding organization (https://ror.org): ": "021nxhr62",
+            "Would you like to upload files, provide a link, or skip? (upload/link/skip): ": "upload",
+            "Enter the filename to upload (or type 'done' to finish): ": "test_data.csv",
+            "Do you want to add more files? (yes/no): ": "no",
+            "Are you ready to submit this dataset to CaltechDATA? (yes/no): ": "yes",
         }
 
     def run_test_submission(self):
@@ -128,12 +127,14 @@ class CaltechDataTester:
             # Restore stdout
             sys.stdout = sys.__stdout__
 
-            return True
+            # Ensure the script exits after submission
+            self.log("\n🎉 Test submission completed successfully!")
+            sys.exit(0)
 
         except Exception as e:
             self.log(f"Error in test submission: {e}")
             traceback.print_exc()
-            return False
+            sys.exit(1)
         finally:
             # Cleanup
             if "test_csv" in locals() and os.path.exists(test_csv):
@@ -143,15 +144,7 @@ class CaltechDataTester:
 
 def main():
     tester = CaltechDataTester()
-
-    success = tester.run_test_submission()
-
-    if success:
-        tester.log("\n🎉 Test submission completed successfully!")
-        sys.exit(0)
-    else:
-        tester.log("\n❌ Test submission failed - check logs for details")
-        sys.exit(1)
+    tester.run_test_submission()
 
 
 if __name__ == "__main__":
