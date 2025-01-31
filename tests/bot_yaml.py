@@ -10,7 +10,6 @@ import pytest
 import importlib.util
 import traceback
 
-
 class CaltechDataTester:
     def __init__(self):
         # Use GitHub Actions environment or create a local test directory
@@ -125,6 +124,9 @@ class CaltechDataTester:
                 sys.argv = [sys.argv[0], "-test"]
                 cli_module.main()
 
+            # Wait for final system response before exiting
+            time.sleep(2)
+
             # Restore stdout
             sys.stdout = sys.__stdout__
 
@@ -135,11 +137,14 @@ class CaltechDataTester:
             traceback.print_exc()
             return False
         finally:
-            # Cleanup
+            # Cleanup test files
             if "test_csv" in locals() and os.path.exists(test_csv):
                 os.remove(test_csv)
             self.log("Test files cleaned up")
 
+            # Flush output streams before exit
+            sys.stdout.flush()
+            sys.stderr.flush()
 
 def main():
     tester = CaltechDataTester()
@@ -148,11 +153,14 @@ def main():
 
     if success:
         tester.log("\n🎉 Test submission completed successfully!")
+        sys.stdout.flush()
+        sys.stderr.flush()
         sys.exit(0)
     else:
         tester.log("\n❌ Test submission failed - check logs for details")
+        sys.stdout.flush()
+        sys.stderr.flush()
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
