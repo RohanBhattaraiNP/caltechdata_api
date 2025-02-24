@@ -12,8 +12,7 @@ The extracted records were saved into a CSV file containing:
 
 ## **Process**
 1. **Understanding the API & Queries**  
-   - I Studied the [CaltechAUTHORS API documentation](https://authors.library.caltech.edu/metadata_searching).  
-   - and then Analyzed example code from [Caltech Library’s Ames harvester](https://github.com/caltechlibrary/ames/blob/main/ames/harvesters/caltechauthors.py). It helped me alot to understand the api calls. even the api documentation, i tried with different metadata queries but it always lookedup inside the metadata and not the field. Did alot of trial and error to get the right query. 
+   - I studied the [CaltechAUTHORS API documentation](https://authors.library.caltech.edu/metadata_searching) and example code from [Caltech Library’s Ames harvester](https://github.com/caltechlibrary/ames/blob/main/ames/harvesters/caltechauthors.py). It helped me alot to understand the api calls. even the api documentation, i tried with different metadata queries but it always lookedup inside the metadata and not the field. Did alot of trial and error to get the right query. 
 
 2. **Query**  
    - The search query used for each DOI prefix:  
