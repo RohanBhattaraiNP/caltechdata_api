@@ -22,9 +22,9 @@ The extracted records were saved into a CSV file containing:
      ```
    - Example queries:
      ```
-     https://authors.library.caltech.edu/api/records?q=metadata.related_identifiers.identifier:["10.22002/0" TO "10.22002/z"]&size=1000
-     https://authors.library.caltech.edu/api/records?q=metadata.related_identifiers.identifier:["10.14291/0" TO "10.14291/z"]&size=1000
-     https://authors.library.caltech.edu/api/records?q=metadata.related_identifiers.identifier:["10.25989/0" TO "10.25989/z"]&size=1000
+     https://authors.library.caltech.edu/search?q=metadata.related_identifiers.identifier:["10.22002/0" TO "10.22002/z"]&size=1000
+     https://authors.library.caltech.edu/search?q=metadata.related_identifiers.identifier:["10.14291/0" TO "10.14291/z"]&size=1000
+     https://authors.library.caltech.edu/search?q=metadata.related_identifiers.identifier:["10.25989/0" TO "10.25989/z"]&size=1000
      ```
 
 3. **Data Extraction & Processing**  
