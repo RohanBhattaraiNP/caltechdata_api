@@ -1,7 +1,7 @@
 # **CaltechDATA DOI Records Extraction & Query Optimization**
 
 ## **Overview**
-The goal of this project was to retrieve records from the CaltechAUTHORS API that contain related identifiers from **CaltechDATA**. These related identifiers are **DOIs** with the following prefixes:
+The goal was to retrieve records from the CaltechAUTHORS API that contain related identifiers from **CaltechDATA**. These related identifiers are **DOIs** with the following prefixes: 
 - `10.22002`
 - `10.14291`
 - `10.25989`
@@ -12,11 +12,10 @@ The extracted records were saved into a CSV file containing:
 
 ## **Process**
 1. **Understanding the API & Queries**  
-   - Studied the [CaltechAUTHORS API documentation](https://authors.library.caltech.edu/metadata_searching).  
-   - Analyzed example code from [Caltech Library’s Ames harvester](https://github.com/caltechlibrary/ames/blob/main/ames/harvesters/caltechauthors.py).  
-   - Identified the correct query format for retrieving records containing related DOIs.
+   - I Studied the [CaltechAUTHORS API documentation](https://authors.library.caltech.edu/metadata_searching).  
+   - and then Analyzed example code from [Caltech Library’s Ames harvester](https://github.com/caltechlibrary/ames/blob/main/ames/harvesters/caltechauthors.py). It helped me alot to understand the api calls. even the api documentation, i tried with different metadata queries but it always lookedup inside the metadata and not the field. Did alot of trial and error to get the right query. 
 
-2. **Query Construction & Testing**  
+2. **Query**  
    - The search query used for each DOI prefix:  
      ```plaintext
      ?q=metadata.related_identifiers.identifier:["<DOI_PREFIX>/0" TO "<DOI_PREFIX>/z"]&size=1000
