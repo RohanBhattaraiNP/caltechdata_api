@@ -47,6 +47,3 @@ Found 1 records with 10.25989 DOIs
 Results saved to data_citations.csv
 Total records found: 212
 ```
-
-
-
