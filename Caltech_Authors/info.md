@@ -6,10 +6,6 @@ The goal was to retrieve records from the CaltechAUTHORS API that contain relate
 - `10.14291`
 - `10.25989`
 
-The extracted records were saved into a CSV file containing:
-- **CaltechAUTHORS Identifier** (e.g., `6fqp8-y9536`)
-- **Related DOIs** (e.g., `10.22002/aeffy-dcr62`, `10.22002/h88fq-dk449`, `10.22002/m4mpa-4mt17`)
-
 ## **Process**
 1. **Understanding the API & Queries**  
    - I studied the [CaltechAUTHORS API documentation](https://authors.library.caltech.edu/metadata_searching) and example code from [Caltech Library’s Ames harvester](https://github.com/caltechlibrary/ames/blob/main/ames/harvesters/caltechauthors.py). It helped me alot to understand the api calls. even the api documentation, i tried with different metadata queries but it always lookedup inside the metadata and not the field. Did alot of trial and error to get the right query. 
