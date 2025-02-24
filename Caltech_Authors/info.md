@@ -1,4 +1,4 @@
-# **CaltechDATA DOI Records Extraction & Query Optimization**
+# **CaltechAuthors DOI Records Extraction & Its Query**
 
 ## **Overview**
 The goal was to retrieve records from the CaltechAUTHORS API that contain related identifiers from **CaltechDATA**. These related identifiers are **DOIs** with the following prefixes: 
